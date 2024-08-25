@@ -4,7 +4,9 @@ import { Book } from '@/types';
 
 async function BookList(){
     // data fetching
-    // Best Practice: When data in only that Component who uses it. Ex: Don't fetch data in Home and then pass props to this component. Becuase Home will be delaying unnecessarly
+    // Best Practice 1: When data in only that Component who uses it. Ex: Don't fetch data in Home and then pass props to this component. Becuase Home will be delaying unnecessarly
+
+    // Best Practice 2: even if same data use in multiple component don't send props. Fetch where it needs. Next.js use Request Memorization tech to cache data. It cache data if available it return from there. 
     // const books = await fetchBooks();
 
     const books = await [
@@ -50,7 +52,19 @@ async function BookList(){
 };
 
 async function fetchBooks(){
-  const response = await fetch(`${process.env.BACKEND_URL}/books`, { cache: 'no-store' });
+
+  // it will cache automatically
+  const response = await fetch(`${process.env.BACKEND_URL}/books`);
+
+  // it will not cache 
+  const response2 = await fetch(`${process.env.BACKEND_URL}/books`, { cache: 'no-store' });
+
+  // it will update cached data every 1 hours 
+  const response3 = await fetch(`${process.env.BACKEND_URL}/books`, { next: 
+    { 
+      revalidate: 60*60, // every 1 hour 
+    } 
+  });
   if (!response.ok) {
       throw new Error('An error occurred while fetching the books');
   }
