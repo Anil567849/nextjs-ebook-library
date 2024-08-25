@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import BookCard from './BookCard';
 import { Book } from '@/types';
 
 async function BookList(){
     // data fetching
+    // Best Practice: When data in only that Component who uses it. Ex: Don't fetch data in Home and then pass props to this component. Becuase Home will be delaying unnecessarly
     // const books = await fetchBooks();
 
     const books = await [

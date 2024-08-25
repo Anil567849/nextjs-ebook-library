@@ -11,7 +11,8 @@ import Loading from "@/components/Loading";
 
 export default function Home() {
   return (
-      <>
+      <>    
+            {/* When data will fetch then it will run BookList  */}
           <Suspense fallback={<Loading />}>
               <BookList />
           </Suspense>
